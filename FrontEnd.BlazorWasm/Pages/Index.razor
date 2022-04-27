@@ -1,0 +1,101 @@
+﻿@page "/index2"
+
+<PageTitle>Login</PageTitle>
+
+<table id="testata" style="width: 100%;">
+    <tbody>
+        <tr>
+            <td style="width: 40%;"><img src="/img/logoDeltaP.gif" alt="Logo"></td>
+            <td style="text-align: left;">
+                <span style="font-size: 2rem;color: #003579;">Interventi manutenzione</span>
+            </td>
+            <td style="text-align: right;width:110px">
+                @*<button id="btLogoff" type="button" class="btn" onclick="return logoff();" style="height: 24px; width: 94px;display:none">Esci</button>*@
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- <table id="testata"> -->
+<!-- <tr>  -->
+<!-- <td><img src="./img/logoDeltaP.gif" alt="Modus" /></td>-->
+<!-- <td>  <h1>Gestione interventi </h1> </td> -->
+<!-- </tr> -->
+<!-- </table> -->
+
+<div id="loginDiv" style="width:100%;display:inline-block;margin-top:50px">
+    <br />
+    <br />
+    <br />
+    <br />
+    <table style="width: 100%;">
+        <tbody>
+            <tr>
+                <td style="width: 40%;"><span>&nbsp;</span></td>
+                <td style="text-align: left;">
+                    <table id="loginTable" border="0">
+                        <tr>
+                            <td class="loginLabel">Username</td>
+                            <td><input type="text" id="userName" /></td>
+                        </tr>
+                        <tr>
+                            <td class="loginLabel">Password</td>
+                            <td><input type="password" id="password" /></td>
+                        </tr>
+                        <tr>
+                            <td class="loginLabel">&nbsp;</td>
+                            <td style="text-align:center"><button id="btLogin" type="button" class="btn" style="height: 24px; width: 94px">Login</button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+</div>
+<div style="text-align:center;color:red;font-size:13px;height:20px">
+    <label id="messages" name="messages"></label>
+</div>
+<!-- </div> --> <!--prima: end div login-->
+<!--
+The schema.total setting may be omitted when the Grid is bound to a plain Array (that is, the data items' collection is not a value of a field in the server response). In this case, the length of the response Array will be used.
+The schema.total must be set if the serverPaging option is set to true or the schema.data option is used.
+
+Source.read(); // "read()" will fire the "change" event of the dataSource and the widget will be bound
+
+-->
+<br />
+<br />
+<div class="container" style="display:inline">
+    <button id="backtolist" class="btn" onclick="showList()" style="display: none">torna a elenco   </button>
+</div>
+
+<div id="elenco" style="display:none">
+
+
+    <div class="panel-heading">
+        <h2>Rapporti di manutenzione   -   <label id="gridTitle"></label></h2>
+    </div>
+
+    <div>
+        <div id="grid"></div>
+    </div>
+</div>
+
+
+<div id="divDettaglio" class="container" style="display:none">
+    <div class="panel-heading">
+        <h2>Rapporto intervento</h2>
+    </div>
+
+    <table id="dettaglio">
+        <colgroup>
+            <col class="label" />
+            <col class="content" />
+        </colgroup>
+    </table>
+</div>
+
+
+<input type="text" id="hidtk" value="" style="display:none" />
+<input type="text" id="hidCid" value="b3de83be-2c12-4031-a7de-787ef2c01c14" style="display:none" />

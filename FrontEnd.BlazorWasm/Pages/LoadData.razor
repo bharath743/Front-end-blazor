@@ -1,0 +1,70 @@
+﻿@page "/load-data"
+@using System.Collections.ObjectModel
+@using Telerik.Blazor
+@using Telerik.DataSource
+
+@layout SecondaryLayout
+
+@inject IJSRuntime jsInterop
+@inject IServerService server
+@inject IPdfExportationService pdf
+
+<PageTitle>Fetch-data</PageTitle>
+<div class="container">
+    <button class="btn btn-primary p-4" @onclick="@(()=>ExportToPDF())"><span class="oi oi-print">Export PDF</span></button>
+    <TelerikGrid Data="@GetProducts" Pageable="true"
+                 Sortable="true" FilterMode="@GridFilterMode.FilterMenu" class="p-5">
+        <GridColumns>
+            <GridColumn Field="@nameof(Products.Name)" Title="Product Name" />
+            <GridColumn Field="@nameof(Products.Price)" Title="Price ($)" />
+            <GridColumn Field="@nameof(Products.Quantity)" title="Stock quantity" />
+        </GridColumns>
+    </TelerikGrid>
+</div>
+
+@code {
+
+    private ObservableCollection<Products> GetProducts = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await jsInterop.InvokeAsync<string>("getData", "token");
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            var response = await server.GetProductsAsync(token);
+            if (response.Status == "SUCCESS")
+            {
+                GetProducts = new ObservableCollection<Products>(response.Data);
+            }
+            else
+            {
+                //notify the user
+                Console.WriteLine(response.Message);
+            }
+        }
+        else
+        {
+            //tell the user that there's something wrong with data fetching.
+            Console.WriteLine("user is not connected. the token is missing");
+        }
+    }
+
+    private async void GetDetail(Products products)
+    {
+        var token = await jsInterop.InvokeAsync<string>("getData", "token");
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            //this is just an api call simulation
+            //TODO: call an api and use to result
+            var result = await server.GetProductsDetailsAsync(token, products.Id);
+            //js to display a alert
+            await jsInterop.InvokeVoidAsync($"callAlert", $"**{products.Name}** has been selected");
+        }
+    }
+
+    void ExportToPDF()
+    {
+        pdf.ExportPdf(GetProducts, $"report-{Guid.NewGuid()}.pdf", $"The report from {DateTime.Now}", "Products");
+    }
+
+}

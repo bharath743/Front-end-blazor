@@ -1,0 +1,93 @@
+﻿@page "/"
+
+@inject IJSRuntime jsInterop
+@inject IServerService server
+@inject NavigationManager navigator
+
+@using Telerik.DataSource
+
+
+
+<PageTitle>Authentication</PageTitle>
+<section class="vh-100" style="background-color: white;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <h3 class="mb-5">Sign in</h3>
+                        @if (logInFailed)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                @logInFailedMessage
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <EditForm Model="@user" OnValidSubmit="@LoginAsync">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+                            <div class="form-outline mb-4">
+                                <input type="text" id="typeEmailX-2" class="form-control form-control-lg" 
+                                        @bind-value="@user.Username"/>
+                                <label class="form-label" for="typeEmailX-2">Username</label>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input type="password" id="typePasswordX-2" class="form-control form-control-lg" 
+                                        @bind-value="@user.Password"/>
+                                <label class="form-label" for="typePasswordX-2">Password</label>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                        </EditForm>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private UserDTO user = new();
+    private bool logInFailed = false;
+    private string logInFailedMessage = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await jsInterop.InvokeAsync<string>("getData", "token");
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            logInFailedMessage = "Your session has experied";
+            navigator.NavigateTo("/");
+        }
+        else
+        {
+            navigator.NavigateTo("/load-data");
+        }
+    }
+
+    private async Task LoginAsync()
+    {
+        logInFailed = false;
+        var res = await server.AuthenticateAsync(user);
+        if (res.Status == "SUCCESS")
+        {
+            GoToHome(res.Data);
+        }
+        else if (res.Status == "ERROR")
+        {
+            logInFailedMessage = res.Message;
+            logInFailed = true;
+        }
+
+        user = new();//reset the form
+    }
+
+    private async void GoToHome(string token)
+    {
+        await jsInterop.InvokeVoidAsync("setData", "token", token);
+        navigator.NavigateTo("/load-data");
+    }
+}

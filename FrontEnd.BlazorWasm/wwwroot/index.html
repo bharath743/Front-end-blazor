@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>FrontEnd.BlazorWasm</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="FrontEnd.BlazorWasm.styles.css" rel="stylesheet" />
+
+    <!--Telerik trial version script-->
+    <script src="_content/Telerik.UI.for.Blazor.Trial/js/telerik-blazor.js" defer></script>
+    <link rel="stylesheet" href="_content/Telerik.UI.for.Blazor.Trial/css/kendo-theme-default/all.css" />
+
+    <!--Template links and scripts-->
+    <!--<script src="https://unpkg.com/jquery"></script>-->
+    <!--<link href="~/css/pffe.css" type="text/css" rel="stylesheet" />-->
+    <!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="/common/css/kendo.bootstrap-v4.min.css" />
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/common/css/pffe2.css" />
+    <script src="/common/js/cultures/kendo.culture.it-IT.min.js"></script>
+    <script src="/common/js/messages/kendo.messages.it-IT.min.js"></script>-->
+    <!--Second template-->
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+        $width: 15px;
+        $height: 15px;
+
+        body {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            font-family: Montserrat;
+        }
+
+        .wrap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .text {
+            color: #fbae17;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .bounceball {
+            position: relative;
+            display: inline-block;
+            height: 37px;
+            width: $width;
+            &:before
+
+        {
+            position: absolute;
+            content: '';
+            display: block;
+            top: 0;
+            width: $width;
+            height: $height;
+            border-radius: 50%;
+            background-color: #fbae17;
+            transform-origin: 50%;
+            animation: bounce 500ms alternate infinite ease;
+        }
+
+        }
+
+        @keyframes bounce {
+            0% {
+                top: $bounce_height;
+                height: 5px;
+                border-radius: 60px 60px 20px 20px;
+                transform: scaleX(2);
+            }
+
+            35% {
+                height: $height;
+                border-radius: 50%;
+                transform: scaleX(1);
+            }
+
+            100% {
+                top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="wrap">
+            <div class="loading">
+                <div class="bounceball"></div>
+                <div class="text">NOW LOADING</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <script src="js/localStorage.js"></script>
+</body>
+
+</html>
